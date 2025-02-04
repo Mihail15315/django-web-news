@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ news_item.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .news-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .news-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+
+        .news-meta {
+            font-size: 14px;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 12px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            background-color: #0056b3;
+        }
+        .news-image {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ news_item.title }}</h1>
+        {% if news_item.main_image %}
+            <img src="{{ news_item.main_image.url }}" class="news-image" alt="Main Image">
+        {% endif %}
+        <div class="news-meta">Опубликовано: {{ news_item.publication_date }}</div>
+        <p class="news-text">{{ news_item.text }}</p>
+        <a href="{% url 'news_list' %}" class="back-link">Вернуться к новостям</a>
+    </div>
+</body>
+</html>
