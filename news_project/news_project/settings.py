@@ -21,7 +21,6 @@ CONSTANCE_CONFIG = {
     'EMAIL_BODY': ('Here are the news published today.', 'Body of the email'),
     'EMAIL_SEND_TIME': ('08:00', 'Time to send the email in HH:MM format'),
 }
-
 # CELERY_BEAT_SCHEDULE = {
 #     'send-daily-news-email': {
 #         'task': 'news.tasks.send_daily_news_email',
@@ -61,6 +60,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.gis',
     'constance',
     'constance.backends.database',
     'django.contrib.sites',  # необходим для django-summernote
@@ -73,7 +73,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mapwidgets',
+    'leaflet',
 ]
+# MAP_WIDGETS = {
+#     "GooglePointFieldWidget": (
+#         ("zoom", 15),
+#         ("mapCenterLocation", [55.75, 37.62]),  # Центр карты по умолчанию (Москва)
+#     ),
+# }
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (55.75, 37.61),  # Центр карты (Москва)
+    'DEFAULT_ZOOM': 10,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'SCALE': 'both',
+    'ATTRIBUTION_PREFIX': 'Powered by django-leaflet',
+}
+# YANDEX_MAPS_API_KEY = '7bfba5c5-0696-4d42-b8f1-ad62d9fb1c90'
 SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -109,13 +127,22 @@ WSGI_APPLICATION = 'news_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'new_db_name',
+        'USER': 'postgres',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -160,10 +187,9 @@ DEBUG = True
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "mihailbaranov16072002@gmail.com"
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
-DEBUG = True
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # SERVER_EMAIL = EMAIL_HOST_USER
 # EMAIL_ADMIN = EMAIL_HOST_USER

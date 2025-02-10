@@ -8,4 +8,5 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('api/v1/', include('news.urls')),
     path('', include('news.urls')),
+    path('places/', include('news.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
