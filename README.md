@@ -45,3 +45,5 @@ bash
 - **Перейдите на адрес http://localhost:8000/admin/news/weatherreport/**: И убедитесь что сводка собрана, также вы можете фильтровать по дате и по местам.
 ### Страница настройки сбора данных о погоде
 ![](https://github.com/Mihail15315/django-web-news/blob/weather/periodictask.png)
+### Страница сводки данных о погоде
+![](https://github.com/Mihail15315/django-web-news/blob/weather/weatherreport.png)
