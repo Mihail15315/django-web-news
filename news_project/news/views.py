@@ -10,6 +10,10 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import UploadFileForm
 from django.contrib.gis.geos import Point
 import openpyxl
+import xlsxwriter
+from .models import WeatherReport
+import logging
+from datetime import datetime
 
 @csrf_exempt
 def index(request):
@@ -77,3 +81,53 @@ def upload_file(request):
     else:
         form = UploadFileForm()
     return render(request, 'places/upload.html', {'form': form})
+
+def export_weather_report(request):
+    places = NotablePlace.objects.all()
+
+    if request.method == 'GET':
+        place_id = request.GET.get('place_id')  # Используем place_id вместо place
+        date_str = request.GET.get('date')
+
+        # Фильтрация данных
+        weather_reports = WeatherReport.objects.all()
+
+        if place_id:
+            print(f"Filtering by place_id: {place_id}")  # Отладочное сообщение
+            weather_reports = weather_reports.filter(place_id=place_id)
+
+        if date_str:
+            print(f"Filtering by date: {date_str}")  # Отладочное сообщение
+            try:
+                date = datetime.strptime(date_str, '%Y-%m-%d').date()
+                weather_reports = weather_reports.filter(timestamp__date=date)
+            except ValueError:
+                print("Invalid date format. Expected YYYY-MM-DD.")
+
+        # Создание xlsx-файла
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="weather_reports.xlsx"'
+
+        workbook = xlsxwriter.Workbook(response, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        # Заголовки столбцов
+        headers = ['Место', 'Температура (°C)', 'Влажность (%)', 'Давление (hPa)', 'Направление ветра', 'Скорость ветра (м/с)', 'Дата и время']
+        for col_num, header in enumerate(headers):
+            worksheet.write(0, col_num, header)
+
+        # Данные
+        for row_num, report in enumerate(weather_reports, start=1):
+            worksheet.write(row_num, 0, report.place.name)
+            worksheet.write(row_num, 1, report.temperature)
+            worksheet.write(row_num, 2, report.humidity)
+            worksheet.write(row_num, 3, report.pressure)
+            worksheet.write(row_num, 4, report.wind_direction)
+            worksheet.write(row_num, 5, report.wind_speed)
+            worksheet.write(row_num, 6, report.timestamp.strftime('%Y-%m-%d %H:%M:%S'))
+
+        workbook.close()
+        return response
+
+    # Если запрос не GET, отображаем HTML-страницу
+    return render(request, 'news/export_weather_reports.html', {'places': places})

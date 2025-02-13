@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Экспорт сводки погоды</title>
+</head>
+<body>
+    <h1>Экспорт сводки погоды</h1>
+    <form method="get" action="{% url 'export_weather_report' %}">
+        <label for="place">Примечательное место:</label>
+        <select name="place" id="place">
+            <option value="">Все места</option>
+            {% for place in places %}
+                <option value="{{ place.id }}">{{ place.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="date">Дата снятия показаний:</label>
+        <input type="date" name="date" id="date">
+
+        <button type="submit">Экспорт в xlsx</button>
+    </form>
+</body>
+</html>

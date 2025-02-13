@@ -4,6 +4,7 @@ from .views import NewsViewSet, news_list, news_detail
 from . import views
 from .views import edit_place
 from .views import upload_file
+from .views import export_weather_report
 
 router = DefaultRouter()
 router.register(r'news', NewsViewSet)
@@ -14,4 +15,5 @@ urlpatterns = [
     path('<int:news_id>/', news_detail, name='news_detail'),
     path('index/', views.index, name='index'),
     path('places/<int:pk>/edit/', edit_place, name='edit_place'),
+    path('export-weather/', export_weather_report, name='export_weather_report'),
 ]
