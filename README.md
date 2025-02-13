@@ -48,5 +48,5 @@ bash
 ### Главная страница
 ![images/screenshot-homepage.png](https://github.com/Mihail15315/django-web-news/blob/master/list.png)
 
-### Страница контактов
-![Скриншот страницы контактов](images/screenshot-contact.png)
+### Страница новости
+![](https://github.com/Mihail15315/django-web-news/blob/master/news_index.png)
