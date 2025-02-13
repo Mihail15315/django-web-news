@@ -46,7 +46,7 @@ bash
   ## Скриншоты
 
 ### Главная страница
-![Скриншот главной страницы](images/screenshot-homepage.png)
+![images/screenshot-homepage.png](https://github.com/Mihail15315/django-web-news/blob/master/list.png)
 
 ### Страница контактов
 ![Скриншот страницы контактов](images/screenshot-contact.png)
