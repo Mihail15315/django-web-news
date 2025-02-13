@@ -49,4 +49,10 @@ bash
 ![images/screenshot-homepage.png](https://github.com/Mihail15315/django-web-news/blob/master/list.png)
 
 ### Страница новости
+![](https://github.com/Mihail15315/django-web-news/blob/master/news_id.png)
+
+### Страница добавления новости
 ![](https://github.com/Mihail15315/django-web-news/blob/master/news_index.png)
+
+### Страница API списка новостей
+![](https://github.com/Mihail15315/django-web-news/blob/master/news.png)
