@@ -13,14 +13,9 @@ from decouple import config
 from pathlib import Path
 from celery.schedules import crontab
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
-
-CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
-CONSTANCE_CONFIG = {
-    'EMAIL_RECIPIENTS': ('mihailbaranov780@gmail.com', 'Comma-separated list of email recipients'),
-    'EMAIL_SUBJECT': ('Daily News Update', 'Subject of the email'),
-    'EMAIL_BODY': ('Here are the news published today.', 'Body of the email'),
-    'EMAIL_SEND_TIME': ('08:00', 'Time to send the email in HH:MM format'),
-}
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_TIMEZONE = 'UTC'
 # CELERY_BEAT_SCHEDULE = {
 #     'send-daily-news-email': {
 #         'task': 'news.tasks.send_daily_news_email',
@@ -33,8 +28,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 SUMMERNOTE_THEME = 'bs4'
-
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -60,6 +53,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_celery_beat',
     'django.contrib.gis',
     'constance',
     'constance.backends.database',
@@ -136,7 +130,7 @@ WSGI_APPLICATION = 'news_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'new_db_name',
+        'NAME': 'db',
         'USER': 'postgres',
         'PASSWORD': '123',
         'HOST': 'localhost',
@@ -193,3 +187,11 @@ EMAIL_USE_SSL = True
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # SERVER_EMAIL = EMAIL_HOST_USER
 # EMAIL_ADMIN = EMAIL_HOST_USER
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_CONFIG = {
+    'MY_SETTING': (42, 'Описание настройки'),
+    'EMAIL_RECIPIENTS': ('mihailbaranov780@gmail.com', 'Comma-separated list of email recipients'),
+    'EMAIL_SUBJECT': ('Daily News Update', 'Subject of the email'),
+    'EMAIL_BODY': ('Here are the news published today.', 'Body of the email'),
+    'EMAIL_SEND_TIME': ('08:00', 'Time to send the email in HH:MM format'),
+}

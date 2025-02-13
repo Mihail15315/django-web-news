@@ -2,7 +2,7 @@ from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
 from .models import News, Author
 from django.contrib.gis import forms
-from .models import NotablePlace
+from .models import NotablePlace, WeatherReport
 from mapwidgets.widgets import GoogleMapPointFieldWidget
 from leaflet.admin import LeafletGeoAdmin 
 # admin.site.register(News)
@@ -18,5 +18,10 @@ class NotablePlaceAdmin(LeafletGeoAdmin):
     list_display = ('name', 'coordinates', 'rating')
     search_fields = ('name',)
     list_filter = ('rating',)
-
+@admin.register(WeatherReport)
+class WeatherReportAdmin(admin.ModelAdmin):
+    list_display = ('place', 'temperature', 'humidity', 'pressure', 'wind_direction', 'wind_speed', 'timestamp')
+    list_filter = ('place', 'timestamp')
+    search_fields = ('place__name',)
+    readonly_fields = ('place', 'temperature', 'humidity', 'pressure', 'wind_direction', 'wind_speed', 'timestamp')
 admin.site.register(NotablePlace, NotablePlaceAdmin)

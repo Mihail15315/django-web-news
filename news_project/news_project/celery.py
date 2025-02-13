@@ -8,6 +8,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'news_project.settings')
 django.setup()
 app = Celery('news_project')
 app.config_from_object('django.conf:settings', namespace='CELERY')
+import news.task
 app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'send-daily-news-email': {
@@ -15,4 +16,8 @@ app.conf.beat_schedule = {
         'schedule': crontab(hour=int(config.EMAIL_SEND_TIME.split(':')[0]), 
                             minute=int(config.EMAIL_SEND_TIME.split(':')[1])),
     },
-}  
+    'fetch-weather-reports': {
+        'task': 'news.task.fetch_weather_reports',
+        'schedule': 60,  # По умолчанию раз в час (в секундах)
+    },
+}

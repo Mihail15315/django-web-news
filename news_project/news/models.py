@@ -28,6 +28,18 @@ class NotablePlace(models.Model):
     class Meta:
         verbose_name = "Примечательное место"
         verbose_name_plural = "Примечательные места"
+
+class WeatherReport(models.Model):
+    place = models.ForeignKey(NotablePlace, on_delete=models.CASCADE)
+    temperature = models.FloatField()
+    humidity = models.FloatField()
+    pressure = models.FloatField()
+    wind_direction = models.CharField(max_length=50)
+    wind_speed = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Weather report for {self.place.name} at {self.timestamp}"
 class Author(models.Model):
     name = models.CharField(max_length=100)
 
