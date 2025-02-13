@@ -43,3 +43,5 @@ bash
 - **Откройте два терминала по адресу .../django-web-news/news_project**: В первом введите: celery -A news_project worker --loglevel=info а во втором: celery -A news_project beat -l info.
 - **Откройте файл .env**: И поменяйте api c сайта https://home.openweathermap.org/api_keys на ваш собственный.
 - **Перейдите на адрес http://localhost:8000/admin/news/weatherreport/**: И убедитесь что сводка собрана, также вы можете фильтровать по дате и по местам.
+### Страница настройки сбора данных о погоде
+![](https://github.com/Mihail15315/django-web-news/blob/weather/periodictask.png)
