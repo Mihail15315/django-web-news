@@ -56,3 +56,6 @@ bash
 
 ### Страница API списка новостей
 ![](https://github.com/Mihail15315/django-web-news/blob/master/news.png)
+
+### Страница настройки рассылки
+![](https://github.com/Mihail15315/django-web-news/blob/master/config.png)
