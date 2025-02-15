@@ -4,6 +4,7 @@
 1. **Измените в settings.py 'HOST' на 'db'**
    
 DATABASES = 
+
 {
 
     'default': {
