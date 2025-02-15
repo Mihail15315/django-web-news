@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # Сервис для Django
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=news_project.settings
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+      - db
+
+  # Сервис для Celery
+  celery:
+    build: .
+    command: celery -A news_project worker --loglevel=info
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=news_project.settings
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+      - db
+
+  # Сервис для Redis
+  redis:
+    image: redis:6.0
+    ports:
+      - "6379:6379"
+
+  # Сервис для PostgreSQL с PostGIS
+  db:
+    image: postgis/postgis:13-3.1
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "123"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
+# Том для хранения данных PostgreSQL
+volumes:
+  postgres_data:
