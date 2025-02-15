@@ -3,19 +3,28 @@
 ## Инструкция по разворачиванию в docker
 1. **Измените в settings.py 'HOST' на 'db'**
 DATABASES = {
+
     'default': {
+   
         'ENGINE': 'django.db.backends.postgresql',
+   
         'NAME': 'news_db',
+   
         'USER': 'news_user',
+   
         'PASSWORD': 'news_password',
+   
         'HOST': 'db',
+   
         'PORT': '5432',
+   
     }
+   
 }
-2. **Соберите и запустите контейнеры с помощью Docker Compose: docker-compose up --build**
-3. **После запуска контейнеров примените миграции для создания структуры базы данных: docker-compose exec web python manage.py migrate**
-4. **Если вам нужен доступ к админке Django, создайте суперпользователя: docker-compose exec web python manage.py createsuperuser**
-5. **Чтобы остановить контейнеры, используйте команду: docker-compose down**
+3. **Соберите и запустите контейнеры с помощью Docker Compose: docker-compose up --build**
+4. **После запуска контейнеров примените миграции для создания структуры базы данных: docker-compose exec web python manage.py migrate**
+5. **Если вам нужен доступ к админке Django, создайте суперпользователя: docker-compose exec web python manage.py createsuperuser**
+6. **Чтобы остановить контейнеры, используйте команду: docker-compose down**
 ## Установка
 Следуйте этим шагам, чтобы установить проект на вашем локальном компьютере:
 1. **Клонируйте репозиторий**
