@@ -2,6 +2,7 @@
 Этот проект представляет собой веб-приложение новостей, разработанное с использованием Django. Приложение позволяет просматривать, изменять и удалять новости.
 ## Инструкция по разворачиванию в docker
 1. **Измените в settings.py 'HOST' на 'db'**
+   
 DATABASES = {
 
     'default': {
@@ -21,6 +22,7 @@ DATABASES = {
     }
    
 }
+
 3. **Соберите и запустите контейнеры с помощью Docker Compose: docker-compose up --build**
 4. **После запуска контейнеров примените миграции для создания структуры базы данных: docker-compose exec web python manage.py migrate**
 5. **Если вам нужен доступ к админке Django, создайте суперпользователя: docker-compose exec web python manage.py createsuperuser**
