@@ -3,7 +3,8 @@
 ## Инструкция по разворачиванию в docker
 1. **Измените в settings.py 'HOST' на 'db'**
    
-DATABASES = {
+DATABASES = 
+{
 
     'default': {
    
